@@ -40,7 +40,8 @@ public class User {
     private Department department;
 
 
-    public User(long id, String firstName, String lastName, int age) {
+    public
+    User(long id, String firstName, String lastName, int age) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

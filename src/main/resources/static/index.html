@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My User Interface</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<h1>Welcome to my user interface</h1>
+<p>This is a sample paragraph</p>
+
+<div class="nav-links">
+    <a href="http://localhost:8080/users">Users</a>
+    <a href="http://localhost:8080/courses">Courses</a>
+    <a href="http://localhost:8080/departments">Departments</a>
+</div>
+
+<form>
+    <label for="myInput">Enter User ID:</label>
+    <input type="text" id="myInput" name="myInput">
+    <button type="button" onclick="searchUser()">Search</button>
+</form>
+
+<script>
+    function searchUser() {
+        var userId = document.getElementById("myInput").value;
+        window.location.href = "http://localhost:8080/users/" + userId;
+    }
+</script>
+
+
+
+</body>
+</html>

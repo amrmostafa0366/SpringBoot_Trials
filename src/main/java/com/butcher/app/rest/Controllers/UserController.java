@@ -22,11 +22,6 @@ public class UserController {
     @Autowired
     private DepartmentService departmentService;
 
-    @GetMapping(value = {"", "/"})
-    public String welcome() {
-        return "Welcome";
-    }
-
     @GetMapping(value = "/users")
     public List<User> getAllUsers() {
         return userService.getAll();
