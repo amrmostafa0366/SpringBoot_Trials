@@ -1,6 +1,5 @@
 package com.butcher.app.rest.Models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -8,25 +7,24 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Course {
+public class Department {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     @Column
-    private String courseName;
+    private String departmentName;
 
-    @ JsonIgnoreProperties("courses")
-    @ManyToMany(mappedBy = "courses",cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("department")
+    @OneToMany(mappedBy = "department")
     private Set<User> users = new HashSet<>();
 
-
-    public Course(long id, String courseName) {
+    public Department(long id, String departmentName) {
         this.id = id;
-        this.courseName = courseName;
-        this.users = new HashSet<>();
+        this.departmentName = departmentName;
     }
 
-    public Course() {
+    public Department() {
     }
 
     public long getId() {
@@ -37,12 +35,12 @@ public class Course {
         this.id = id;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     public Set<User> getUsers() {

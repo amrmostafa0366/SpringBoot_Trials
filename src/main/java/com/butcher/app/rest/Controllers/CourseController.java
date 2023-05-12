@@ -2,7 +2,7 @@ package com.butcher.app.rest.Controllers;
 
 import com.butcher.app.rest.Models.Course;
 import com.butcher.app.rest.Models.User;
-import com.butcher.app.rest.Repo.CourseRepo;
+import com.butcher.app.rest.Repo.CourseRepository;
 import com.butcher.app.rest.Services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,45 +19,31 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping(value = "/courses")
-    public List<Course> getAllCourses(){
-        return courseService.getAllCourses();
+    public List<Course> getAll(){
+        return courseService.getAll();
     }
 
     @GetMapping(value = "/courses/{id}")
     public Course getCourseById(@PathVariable long id){
-        return courseService.getCourse(id);
+        return courseService.getCourseById(id);
     }
 
     @PostMapping(value = "/courses/add")
-    public void addCourse(@RequestBody Course course){
-        courseService.saveCourse(course);
+    public void add(@RequestBody Course course){
+        courseService.save(course);
     }
 
     @PutMapping(value = "/courses/update/{id}")
-    public void updateCourse(@PathVariable long id,@RequestBody Course course){
-        Course updatedCourse = courseService.getCourse(id);
+    public void update(@PathVariable long id,@RequestBody Course course){
+        Course updatedCourse = courseService.getCourseById(id);
         updatedCourse.setCourseName(course.getCourseName());
-        courseService.saveCourse(course);
+        courseService.save(course);
     }
 
     @DeleteMapping(value = "/courses/delete/{id}")
-    public void deleteCourse(@PathVariable long id){
-        courseService.deleteCourse(id);
+    public void delete(@PathVariable long id){
+        courseService.delete(id);
     }
 
-    @Autowired
-    private CourseRepo courseRepo;
-
-    @GetMapping("/courses/{courseId}/users")
-    public ResponseEntity<Set<User>> getUsersAssignedToCourse(@PathVariable Long courseId) {
-        Optional<Course> course = courseRepo.findById(courseId);
-
-        if (course.isPresent()) {
-            Set<User> users = course.get().getUsers();
-            return ResponseEntity.ok(users);
-        }
-
-        return ResponseEntity.notFound().build();
-    }
 
 }

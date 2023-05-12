@@ -1,5 +1,7 @@
 package com.butcher.app.rest.Models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -19,6 +21,8 @@ public class User {
     @Column
     private int age;
 
+
+    @ JsonIgnoreProperties("users")
     @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_course",
@@ -30,6 +34,13 @@ public class User {
             }
     )
     private Set<Course> courses = new HashSet<>();
+
+    @JsonIgnoreProperties("users")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id",referencedColumnName = "id")
+    private Department department;
+
+
     public User(long id, String firstName, String lastName, int age, String occupation) {
         this.id = id;
         this.firstName = firstName;
@@ -77,5 +88,13 @@ public class User {
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

@@ -1,7 +1,7 @@
 package com.butcher.app.rest.Services;
 
 import com.butcher.app.rest.Models.User;
-import com.butcher.app.rest.Repo.UserRepo;
+import com.butcher.app.rest.Repo.userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,24 +11,24 @@ import java.util.List;
 public class UserService {
 
     @Autowired
-    private UserRepo userRepo;
+    private userRepository userRepository;
 
-    public List<User> getAllUsers(){
-        return userRepo.findAll();
+    public List<User> getAll(){
+        return userRepository.findAll();
     }
 
     public User getUserById(long id){
-        return userRepo.findById(id).get();
+        return userRepository.findById(id).get();
     }
     public List<User> findByFirstName(String firstName){
-        return userRepo.findByFirstName(firstName);
+        return userRepository.findByFirstName(firstName);
     }
 
-    public User saveUser(User user){
-        return userRepo.save(user);
+    public User save(User user){
+        return userRepository.save(user);
     }
 
-    public void deleteUserById(long id){
-        userRepo.deleteById(id);
+    public void delete(long id){
+        userRepository.deleteById(id);
     }
 }
