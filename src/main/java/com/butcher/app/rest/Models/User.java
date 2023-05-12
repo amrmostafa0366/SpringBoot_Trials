@@ -1,6 +1,5 @@
 package com.butcher.app.rest.Models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
@@ -36,12 +35,12 @@ public class User {
     private Set<Course> courses = new HashSet<>();
 
     @JsonIgnoreProperties("users")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "department_id",referencedColumnName = "id")
     private Department department;
 
 
-    public User(long id, String firstName, String lastName, int age, String occupation) {
+    public User(long id, String firstName, String lastName, int age) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
