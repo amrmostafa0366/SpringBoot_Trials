@@ -20,6 +20,9 @@ public class UserService {
     public User getUserById(long id){
         return userRepo.findById(id).get();
     }
+    public List<User> findByFirstName(String firstName){
+        return userRepo.findByFirstName(firstName);
+    }
 
     public User saveUser(User user){
         return userRepo.save(user);

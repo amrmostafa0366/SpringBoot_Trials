@@ -1,11 +1,16 @@
 package com.butcher.app.rest.Controllers;
 
 import com.butcher.app.rest.Models.Course;
+import com.butcher.app.rest.Models.User;
+import com.butcher.app.rest.Repo.CourseRepo;
 import com.butcher.app.rest.Services.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 @RestController
 public class CourseController {
@@ -39,4 +44,20 @@ public class CourseController {
     public void deleteCourse(@PathVariable long id){
         courseService.deleteCourse(id);
     }
+
+    @Autowired
+    private CourseRepo courseRepo;
+
+    @GetMapping("/courses/{courseId}/users")
+    public ResponseEntity<Set<User>> getUsersAssignedToCourse(@PathVariable Long courseId) {
+        Optional<Course> course = courseRepo.findById(courseId);
+
+        if (course.isPresent()) {
+            Set<User> users = course.get().getUsers();
+            return ResponseEntity.ok(users);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
 }

@@ -2,8 +2,13 @@ package com.butcher.app.rest.Models;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 public class User {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -13,15 +18,24 @@ public class User {
     private String lastName;
     @Column
     private int age;
-    @Column
-    private String occupation;
 
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "user_course",
+            joinColumns = {
+                    @JoinColumn(name = "user_id" , referencedColumnName = "id")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "course_id",referencedColumnName = "id")
+            }
+    )
+    private Set<Course> courses = new HashSet<>();
     public User(long id, String firstName, String lastName, int age, String occupation) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.occupation = occupation;
+
     }
     public User(){}
 
@@ -57,11 +71,11 @@ public class User {
         this.age = age;
     }
 
-    public String getOccupation() {
-        return occupation;
+    public Set<Course> getCourses() {
+        return courses;
     }
 
-    public void setOccupation(String occupation) {
-        this.occupation = occupation;
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 }
