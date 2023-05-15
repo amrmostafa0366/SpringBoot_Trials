@@ -39,6 +39,13 @@ public class User {
     @JoinColumn(name = "department_id",referencedColumnName = "id")
     private Department department;
 
+    @JsonIgnoreProperties("user")
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "roomId",referencedColumnName = "id")
+    private Room room;
+
+
+
 
     public
     User(long id, String firstName, String lastName, int age) {
@@ -96,5 +103,13 @@ public class User {
 
     public void setDepartment(Department department) {
         this.department = department;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
     }
 }
